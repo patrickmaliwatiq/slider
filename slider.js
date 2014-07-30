@@ -72,17 +72,23 @@
             container.find('.pp-slider-button').css("left", newPos);
 
             var percentage = newPos / options.width;
-            var selectedDotIdx = Math.round(percentage * options.itemCount);
-
-//            var foo  = container.find('dot_' + selectedDotIdx);
-//            console.log('Selected Dot: ', foo);
+            var selectedDotIdx = Math.floor(percentage * options.itemCount);
+            console.log(selectedDotIdx);
 
             container.find('.dot.inFocus').removeClass('inFocus');
-            for (var j=selectedDotIdx-2; j <= selectedDotIdx + 2; j++) {
+
+            var range = [0,0];
+            if (selectedDotIdx > options.itemCount - 3) {
+                range = [options.itemCount - 3, options.itemCount];
+            } else if (selectedDotIdx < 3) {
+                range = [0, 5];
+            } else {
+                range = [selectedDotIdx-2, selectedDotIdx+2];
+            }
+
+
+            for (var j=range[0]; j <= range[1]; j++) {
                 var realJ = j;
-                if (j < 0) {
-                    realJ = 0;
-                }
                 var dotFound = container.find('.dot_' + realJ);
                 if (dotFound) {
                     dotFound.addClass('inFocus');

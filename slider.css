@@ -18,11 +18,12 @@
     display: inline-block;
     height: 300px;
     width: 200px;
-    background: #EE00AA;
+    background-size: cover;
 }
 
 body {
     background-color: #000;
+    color: #FFF;
 }
 
 .dot-container {
