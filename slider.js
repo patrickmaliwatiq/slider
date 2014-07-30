@@ -12,18 +12,20 @@
         container.addClass('pp-slider');
         container.addClass('clearfix');
 
-        container.append('<div class="pp-slider-min">-</div><div class="pp-slider-scale"><div class="pp-slider-button"><div class="pp-slider-divies"></div></div><div class="pp-slider-tooltip"></div></div><div class="pp-slider-max">+</div>');
-
-        if (typeof(options) != 'undefined' && typeof(options.hideTooltip) != 'undefined' && options.hideTooltip == true)
-        {
-            container.find('.pp-slider-tooltip').hide();
+        var dotContainer = $('<div></div>').addClass('dot-container');
+        for (var i=0; i < options.itemCount; i++) {
+            var dot = $('<div></div>').addClass('dot dot_' + i);
+            dotContainer.append(dot);
         }
+
+        container.append(dotContainer);
+        container.append('<div class="pp-slider-scale"><div class="pp-slider-button"></div></div>');
 
         if (typeof(options.width) != 'undefined')
         {
             container.css('width',(options.width+'px'));
         }
-        container.find('.pp-slider-scale').css('width',(container.width()-30)+'px');
+        container.find('.pp-slider-scale').css('width',(container.width())+'px');
 
         var startSlide = function (e) {
 
@@ -68,8 +70,24 @@
             currentVal = Math.round((newPos/upperBound)*100,0);
 
             container.find('.pp-slider-button').css("left", newPos);
-            container.find('.pp-slider-tooltip').html(currentVal+'%');
-            container.find('.pp-slider-tooltip').css('left', newPos-6);
+
+            var percentage = newPos / options.width;
+            var selectedDotIdx = Math.round(percentage * options.itemCount);
+
+//            var foo  = container.find('dot_' + selectedDotIdx);
+//            console.log('Selected Dot: ', foo);
+
+            container.find('.dot.inFocus').removeClass('inFocus');
+            for (var j=selectedDotIdx-2; j <= selectedDotIdx + 2; j++) {
+                var realJ = j;
+                if (j < 0) {
+                    realJ = 0;
+                }
+                var dotFound = container.find('.dot_' + realJ);
+                if (dotFound) {
+                    dotFound.addClass('inFocus');
+                }
+            }
 
             opts.onDrop(newPos);
         };
@@ -87,7 +105,6 @@
             if(typeof element.options != 'undefined' && typeof element.options.onChanged == 'function'){
                 element.options.onChanged.call(this, null);
             }
-
         };
 
         container.find('.pp-slider-button').bind('mousedown',startSlide);
@@ -115,10 +132,13 @@
 })(jQuery);
 
 $( document ).ready(function() {
+    var width = 400;
+    var itemCount = 25;
     var callback = function(x) {
-        console.log("Value of x is: " , x/258);
-        var scrollValue = (x/258) * 100;
-        $('.phone-container').scrollLeft(scrollValue)
+//        console.log("Value of x is: " , x/width);
+        var scrollValue = (x/width);
+        var totalWidth = $('.phone').width() * itemCount;
+        $('.phone-container').scrollLeft((scrollValue * totalWidth))
     }
-    $("#slider1").PPSlider({width: 300, onDrop: callback});
+    $("#slider1").PPSlider({width: width, itemCount: 25, onDrop: callback});
 });
