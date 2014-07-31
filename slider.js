@@ -4,6 +4,9 @@
         var element = $(el);
         var options = opts;
         var isMouseDown = false;
+        var startMouseX;
+        var lastElemLeft;
+        var sliderPosition = 0;
 
         element.wrap('<div/>')
         var container = $(el).parent();
@@ -68,19 +71,17 @@
             newPos = Math.max(0,newPos);
             newPos = Math.min(newPos,upperBound);
 
-            container.find('.slider-button').css("left", newPos);
+            sliderPosition = newPos;
 
-            updateDots(newPos);
+            container.find('.slider-button').css("left", sliderPosition);
 
             if (typeof(options.onDrop) !== 'undefined') {
-                options.onDrop(newPos);
+                options.onDrop(sliderPosition);
             }
-
-            
         };
 
-        var updateDots = function(newPos) {
-            var percentage = newPos / options.width;
+        var updateDotsView = function() {
+            var percentage = sliderPosition / options.width;
             var selectedDotIdx = Math.floor(percentage * options.itemCount);
 
             container.find('.dot.inFocus').removeClass('inFocus');
@@ -106,6 +107,7 @@
         var onMouseMove = function (e) {
             if(isMouseDown){
                 updateSliderView(e);
+                updateDotsView();
                 return false;
             }
         };
