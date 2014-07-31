@@ -4,7 +4,6 @@
         var element = $(el);
         var options = opts;
         var isMouseDown = false;
-        var currentVal = 0;
 
         element.wrap('<div/>')
         var container = $(el).parent();
@@ -68,7 +67,6 @@
             var upperBound = (container.find('.slider-line').width()-container.find('.slider-button').width());
             newPos = Math.max(0,newPos);
             newPos = Math.min(newPos,upperBound);
-            currentVal = Math.round((newPos/upperBound)*100,0);
 
             container.find('.slider-button').css("left", newPos);
 
@@ -77,6 +75,8 @@
             if (typeof(options.onDrop) !== 'undefined') {
                 options.onDrop(newPos);
             }
+
+            
         };
 
         var updateDots = function(newPos) {

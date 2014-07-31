@@ -59,33 +59,33 @@ body {
     background-color: #FFF;
 }
 
-/*.phone01 {*/
-    /*background-image: url("beauties/01.jpg");*/
-/*}*/
-/*.phone02 {*/
-    /*background-image: url("beauties/02.jpg");*/
-/*}*/
-/*.phone03 {*/
-    /*background-image: url("beauties/03.jpg");*/
-/*}*/
-/*.phone04 {*/
-    /*background-image: url("beauties/04.jpg");*/
-/*}*/
-/*.phone05 {*/
-    /*background-image: url("beauties/05.jpg");*/
-/*}*/
-/*.phone06 {*/
-    /*background-image: url("beauties/06.jpg");*/
-/*}*/
-/*.phone07 {*/
-    /*background-image: url("beauties/07.jpg");*/
-/*}*/
-/*.phone08 {*/
-    /*background-image: url("beauties/08.jpg");*/
-/*}*/
-/*.phone09 {*/
-    /*background-image: url("beauties/09.jpg");*/
-/*}*/
-/*.phone10 {*/
-    /*background-image: url("beauties/10.jpg");*/
-/*}*/
+.phone01 {
+    background-image: url("beauties/01.jpg");
+}
+.phone02 {
+    background-image: url("beauties/02.jpg");
+}
+.phone03 {
+    background-image: url("beauties/03.jpg");
+}
+.phone04 {
+    background-image: url("beauties/04.jpg");
+}
+.phone05 {
+    background-image: url("beauties/05.jpg");
+}
+.phone06 {
+    background-image: url("beauties/06.jpg");
+}
+.phone07 {
+    background-image: url("beauties/07.jpg");
+}
+.phone08 {
+    background-image: url("beauties/08.jpg");
+}
+.phone09 {
+    background-image: url("beauties/09.jpg");
+}
+.phone10 {
+    background-image: url("beauties/10.jpg");
+}
