@@ -1,6 +1,6 @@
 (function ($) {
 
-    var PPSliderClass = function (el, opts) {
+    var SliderWidget = function (el, opts) {
         var element = $(el);
         var options = opts;
         var isMouseDown = false;
@@ -9,23 +9,25 @@
         element.wrap('<div/>')
         var container = $(el).parent();
 
-        container.addClass('pp-slider');
-        container.addClass('clearfix');
+        container.addClass('slider');
 
         var dotContainer = $('<div></div>').addClass('dot-container');
         for (var i=0; i < options.itemCount; i++) {
             var dot = $('<div></div>').addClass('dot dot_' + i);
+            if (i <= 5) {
+                dot.addClass('inFocus');
+            }
             dotContainer.append(dot);
         }
 
         container.append(dotContainer);
-        container.append('<div class="pp-slider-scale"><div class="pp-slider-button"></div></div>');
+        container.append('<div class="slider-line"><div class="slider-button"></div></div>');
 
         if (typeof(options.width) != 'undefined')
         {
             container.css('width',(options.width+'px'));
         }
-        container.find('.pp-slider-scale').css('width',(container.width())+'px');
+        container.find('.slider-line').css('width',(container.width())+'px');
 
         var startSlide = function (e) {
 
@@ -34,13 +36,12 @@
             startMouseX = pos.x;
 
             lastElemLeft = ($(this).offset().left - $(this).parent().offset().left);
-            updatePosition(e);
+            updateSliderView(e);
 
             return false;
         };
 
         var getMousePosition = function (e) {
-            //container.animate({ scrollTop: rowHeight }, options.scrollSpeed, 'linear', ScrollComplete());
             var posx = 0;
             var posy = 0;
 
@@ -58,22 +59,29 @@
             return { 'x': posx, 'y': posy };
         };
 
-        var updatePosition = function (e) {
+        var updateSliderView = function (e) {
             var pos = getMousePosition(e);
 
             var spanX = (pos.x - startMouseX);
 
             var newPos = (lastElemLeft + spanX)
-            var upperBound = (container.find('.pp-slider-scale').width()-container.find('.pp-slider-button').width());
+            var upperBound = (container.find('.slider-line').width()-container.find('.slider-button').width());
             newPos = Math.max(0,newPos);
             newPos = Math.min(newPos,upperBound);
             currentVal = Math.round((newPos/upperBound)*100,0);
 
-            container.find('.pp-slider-button').css("left", newPos);
+            container.find('.slider-button').css("left", newPos);
 
+            updateDots(newPos);
+
+            if (typeof(options.onDrop) !== 'undefined') {
+                options.onDrop(newPos);
+            }
+        };
+
+        var updateDots = function(newPos) {
             var percentage = newPos / options.width;
             var selectedDotIdx = Math.floor(percentage * options.itemCount);
-            console.log(selectedDotIdx);
 
             container.find('.dot.inFocus').removeClass('inFocus');
 
@@ -86,7 +94,6 @@
                 range = [selectedDotIdx-2, selectedDotIdx+2];
             }
 
-
             for (var j=range[0]; j <= range[1]; j++) {
                 var realJ = j;
                 var dotFound = container.find('.dot_' + realJ);
@@ -94,46 +101,33 @@
                     dotFound.addClass('inFocus');
                 }
             }
-
-            opts.onDrop(newPos);
         };
 
-        var moving = function (e) {
+        var onMouseMove = function (e) {
             if(isMouseDown){
-                updatePosition(e);
+                updateSliderView(e);
                 return false;
             }
         };
 
-        var dropCallback = function (e) {
+        var onMouseUp = function (e) {
             isMouseDown = false;
-            element.val(currentVal);
-            if(typeof element.options != 'undefined' && typeof element.options.onChanged == 'function'){
-                element.options.onChanged.call(this, null);
-            }
         };
 
-        container.find('.pp-slider-button').bind('mousedown',startSlide);
+        container.find('.slider-button').bind('mousedown',startSlide);
 
-        $(document).mousemove(function(e) { moving(e); });
-        $(document).mouseup(function(e){ dropCallback(e); });
+        $(document).mousemove(function(e) { onMouseMove(e); });
+        $(document).mouseup(function(e){ onMouseUp(e); });
 
     };
 
     /*******************************************************************************************************/
 
-    $.fn.PPSlider = function (options) {
-        var opts = $.extend({}, $.fn.PPSlider.defaults, options);
-
+    $.fn.Slider = function (options) {
         return this.each(function () {
-            new PPSliderClass($(this), opts);
+            new SliderWidget($(this), options || {});
         });
     }
-
-    $.fn.PPSlider.defaults = {
-        width: 150
-    };
-
 
 })(jQuery);
 
@@ -141,10 +135,9 @@ $( document ).ready(function() {
     var width = 400;
     var itemCount = 25;
     var callback = function(x) {
-//        console.log("Value of x is: " , x/width);
         var scrollValue = (x/width);
         var totalWidth = $('.phone').width() * itemCount;
         $('.phone-container').scrollLeft((scrollValue * totalWidth))
     }
-    $("#slider1").PPSlider({width: width, itemCount: 25, onDrop: callback});
+    $("#slider1").Slider({width: width, itemCount: itemCount, onDrop: callback});
 });

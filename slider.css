@@ -1,11 +1,27 @@
-.pp-slider { width: 200px; float:left;  -webkit-user-select: none; -khtml-user-select: none; -moz-user-select: none; -o-user-select: none; user-select: none; height: 30px; }
-.pp-slider .pp-slider-scale { background-color: #aaa; height: 1px; border-bottom: 1px solid #efefef; width: 120px; margin-top: 6px; float: left; }
-.pp-slider .pp-slider-scale .pp-slider-button { background-image: url('slider.png'); width: 36px; height: 36px; position: relative; top: -18px; left: 0px;  cursor: pointer; }
-.pp-slider .pp-slider-scale .pp-slider-tooltip { width: 24px; height: 20px; position: relative; top: -5px; left: 0px; text-align: center; font-size: 10px; color: #aaa; }
+.slider {
+    width: 200px;
+    height: 30px;
+}
+
+.slider .slider-line {
+    height: 1px;
+    border-bottom: 1px solid #FFF;
+    width: 120px;
+    margin-top: 6px;
+}
+.slider .slider-line .slider-button {
+    background-image: url('slider.png');
+    width: 36px;
+    height: 36px;
+    position: relative;
+    top: -18px;
+    left: 0px;
+    cursor: hand;
+}
 
 .phone-container {
     border: 1px solid #000;
-    height: 300px;
+    height: 325px;
     width: 1000px;
     overflow-y: hidden;
     overflow-x: hidden;
@@ -13,12 +29,12 @@
 }
 
 .phone {
-    border: 1px solid #FF0000;
     padding:5px;
     display: inline-block;
     height: 300px;
     width: 200px;
     background-size: cover;
+    border: 1px solid #FFF;
 }
 
 body {
@@ -43,33 +59,33 @@ body {
     background-color: #FFF;
 }
 
-.beauty01 {
-    background-image: url("beauties/01.jpg");
-}
-.beauty02 {
-    background-image: url("beauties/02.jpg");
-}
-.beauty03 {
-    background-image: url("beauties/03.jpg");
-}
-.beauty04 {
-    background-image: url("beauties/04.jpg");
-}
-.beauty05 {
-    background-image: url("beauties/05.jpg");
-}
-.beauty06 {
-    background-image: url("beauties/06.jpg");
-}
-.beauty07 {
-    background-image: url("beauties/07.jpg");
-}
-.beauty08 {
-    background-image: url("beauties/08.jpg");
-}
-.beauty09 {
-    background-image: url("beauties/09.jpg");
-}
-.beauty10 {
-    background-image: url("beauties/10.jpg");
-}
+/*.phone01 {*/
+    /*background-image: url("beauties/01.jpg");*/
+/*}*/
+/*.phone02 {*/
+    /*background-image: url("beauties/02.jpg");*/
+/*}*/
+/*.phone03 {*/
+    /*background-image: url("beauties/03.jpg");*/
+/*}*/
+/*.phone04 {*/
+    /*background-image: url("beauties/04.jpg");*/
+/*}*/
+/*.phone05 {*/
+    /*background-image: url("beauties/05.jpg");*/
+/*}*/
+/*.phone06 {*/
+    /*background-image: url("beauties/06.jpg");*/
+/*}*/
+/*.phone07 {*/
+    /*background-image: url("beauties/07.jpg");*/
+/*}*/
+/*.phone08 {*/
+    /*background-image: url("beauties/08.jpg");*/
+/*}*/
+/*.phone09 {*/
+    /*background-image: url("beauties/09.jpg");*/
+/*}*/
+/*.phone10 {*/
+    /*background-image: url("beauties/10.jpg");*/
+/*}*/
