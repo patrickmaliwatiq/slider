@@ -8,6 +8,10 @@
         var lastElemLeft;
         var sliderPosition = 0;
 
+        if (!options.width  || !options.itemCount) {
+            throw 'Missing parameters';
+        }
+
         element.wrap('<div/>')
         var container = $(el).parent();
 
@@ -25,10 +29,12 @@
         container.append(dotContainer);
         container.append('<div class="slider-line"><div class="slider-button"></div></div>');
 
-        if (typeof(options.width) != 'undefined')
+        if (typeof(options.width) !== 'undefined')
         {
             container.css('width',(options.width+'px'));
         }
+        console.log("dot container: ", dotContainer.width());
+
         container.find('.slider-line').css('width',(container.width())+'px');
 
         var startSlide = function (e) {
@@ -74,14 +80,10 @@
             sliderPosition = newPos;
 
             container.find('.slider-button').css("left", sliderPosition);
-
-            if (typeof(options.onDrop) !== 'undefined') {
-                options.onDrop(sliderPosition);
-            }
         };
 
         var updateDotsView = function() {
-            var percentage = sliderPosition / options.width;
+            var percentage = sliderPosition / container.width();
             var selectedDotIdx = Math.floor(percentage * options.itemCount);
 
             container.find('.dot.inFocus').removeClass('inFocus');
@@ -108,6 +110,11 @@
             if(isMouseDown){
                 updateSliderView(e);
                 updateDotsView();
+
+                if (typeof(options.onDrop) !== 'undefined') {
+                    options.onDrop(sliderPosition);
+                }
+
                 return false;
             }
         };
@@ -136,10 +143,12 @@
 $( document ).ready(function() {
     var width = 400;
     var itemCount = 25;
+
     var callback = function(x) {
         var scrollValue = (x/width);
         var totalWidth = $('.phone').width() * itemCount;
         $('.phone-container').scrollLeft((scrollValue * totalWidth))
     }
+    
     $("#slider1").Slider({width: width, itemCount: itemCount, onDrop: callback});
 });
